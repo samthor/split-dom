@@ -4,7 +4,7 @@
  * @param {number} x
  * @return {number}
  */
-function bisectRight(a, x) {
+export function bisectRight(a, x) {
   let low = 0, high = a.length;
   while (low < high) {
     const mid = ~~((low + high) / 2);
