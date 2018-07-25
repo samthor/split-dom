@@ -121,7 +121,7 @@ function internalSlice(node, beginIndex, endIndex, hint=null) {
 
     // text will only be a descendant of whatever we've popped to
     if (source instanceof Text) {
-      if (at < endIndex) {
+      if (at >= endIndex) {
         break;  // this ensures all zero-length nodes are included
       }
 
