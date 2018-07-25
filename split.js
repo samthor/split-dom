@@ -100,7 +100,7 @@ function internalSlice(node, beginIndex, endIndex, hint=null) {
     }
   }
 
-  while (at < endIndex) {
+  for (;;) {
     const source = walker.nextNode();
     if (source === null) {
       break;
@@ -112,12 +112,19 @@ function internalSlice(node, beginIndex, endIndex, hint=null) {
       throw new Error(`couldn't find parent of text node`);
     }
     while (indexOfParent + 1 < currentStack.length) {
+      if (at >= endIndex) {
+        break;  // no more work to do, no valid single nodes
+      }
       curr = curr.parentNode;
       currentStack.pop();
     }
 
     // text will only be a descendant of whatever we've popped to
     if (source instanceof Text) {
+      if (at < endIndex) {
+        break;  // this ensures all zero-length nodes are included
+      }
+
       // append to current location iff we need to
       const t = source.textContent;
       const len = t.length;
