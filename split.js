@@ -135,6 +135,9 @@ function internalSlice(node, beginIndex, endIndex, hint=null) {
       if (content.length) {
         curr.appendChild(document.createTextNode(content));
       }
+      if (content.length !== len) {
+        break;  // didn't consume whole node, bail
+      }
 
       at += len;
       continue;
